@@ -13,14 +13,11 @@ const Wrapper = styled.View`
   padding-bottom: 40;
 `
 
-export default class App extends React.Component {
+export default class Quiz extends React.Component {
   render() {
     const {navigation} = this.props
     return (
-      <FlatList
-        data={API.getDecks()}
-        renderItem={({item}) => <Deck questions={item.questions} onPress={() => navigation.navigate('Deck', {item})}>{item.title}</Deck>}
-      />
+      <Text>{navigation.state.params.item.title}</Text>
     );
   }
 }

@@ -23,8 +23,8 @@ const Wrapper = styled.View`
   padding-bottom:  25;
 `
 
-const Deck = ({children, questions}) => (
-  <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()}>
+const Deck = ({children, questions, ...props}) => (
+  <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} {...props}>
     <Wrapper>
       <Title>{children}</Title>
       <Count>{questions.length || 0} cards</Count>

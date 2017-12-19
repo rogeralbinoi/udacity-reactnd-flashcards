@@ -4,10 +4,11 @@ import styled from 'styled-components/native'
 import * as API from './utils/api'
 import * as color from './utils/color'
 import { Constants } from 'expo'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import AppHeader from './components/AppHeader'
 import Deck from './components/Deck'
 import Decks from './components/Decks'
+import Quiz from './components/Quiz'
 import NewDeck from './components/NewDeck'
 
 const Wrapper = styled.View`
@@ -40,6 +41,21 @@ const Tabs = TabNavigator({
   }
 })
 
+const Stack = StackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      title: 'FlashCards'
+    }
+  },
+  Deck: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Deck'
+    }
+  }
+})
+
 export default class App extends React.Component {
   render() {
     return (
@@ -47,7 +63,9 @@ export default class App extends React.Component {
         <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }}>
           <StatusBar translucent backgroundColor={color.primary} />
         </View>
-        <Tabs />
+        <View style={{flex: 1}}>
+          <Stack />
+        </View>
       </View>
     );
   }
