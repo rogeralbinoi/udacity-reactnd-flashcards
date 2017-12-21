@@ -35,9 +35,9 @@ const Title = styled.Text`
 
 const TextField = styled.TextInput`
   height: 50;
-  margin-top: 20;
+  margin-top: 0;
   margin-right: 20;
-  margin-bottom: 20;
+  margin-bottom: 0;
   margin-left: 20;
   padding-top: 10;
   padding-bottom: 10;
@@ -59,7 +59,13 @@ const ButtonText = styled.Text`
   font-size: 16;
 `
 
-export default class NewDeck extends React.Component {
+const Label = styled.Text`
+  padding-left: 20;
+  padding-right: 20;
+  margin-top: 15;
+`
+
+export default class AddCard extends React.Component {
   saveDeck = () => {
     this.props.navigation.goBack()
   }
@@ -70,15 +76,20 @@ export default class NewDeck extends React.Component {
         scrollEnabled={true}
         behavior="padding"
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View>
-            <Title>What is the title of your new Deck?</Title>
+          <View style={{width: '100%'}}>
+            <Label>Question</Label>
             <TextField
-              placeholder="Deck Title"
+              placeholder="Your Question"
+              onChangeText={(text) => this.setState({text})}
+            />
+            <Label>Answer</Label>
+            <TextField
+              placeholder="Answer"
               onChangeText={(text) => this.setState({text})}
             />
             <TouchableNativeFeedback onPress={this.saveDeck}>
               <NewButton>
-                <ButtonText>Save Deck</ButtonText>
+                <ButtonText>Save Card</ButtonText>
               </NewButton>
             </TouchableNativeFeedback>
           </View>

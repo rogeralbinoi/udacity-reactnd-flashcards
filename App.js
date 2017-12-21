@@ -10,7 +10,7 @@ import Deck from './components/Deck'
 import Decks from './components/Decks'
 import Quiz from './components/Quiz'
 import NewDeck from './components/NewDeck'
-
+import AddCard from './components/AddCard'
 const Wrapper = styled.View`
   background: #fff;
   padding-bottom: 40;
@@ -52,6 +52,20 @@ const Stack = StackNavigator({
     screen: Quiz,
     navigationOptions: {
       title: 'Deck'
+    }
+  },
+  AddCard: {
+    screen: AddCard,
+    navigationOptions: {
+      title: 'Add Card'
+    }
+  }
+},{
+  tabBarOptions: {
+    activeTintColor: '#fff',
+    activeBackgroundColor: `${color.primary}`,
+    style: {
+      backgroundColor: color.primary
     }
   }
 })
