@@ -60,7 +60,11 @@ const ButtonText = styled.Text`
 `
 
 export default class NewDeck extends React.Component {
+  state = {
+    title: ''
+  }
   saveDeck = () => {
+    this.setState({title: ''})
     this.props.navigation.goBack()
   }
   render() {
@@ -74,7 +78,8 @@ export default class NewDeck extends React.Component {
             <Title>What is the title of your new Deck?</Title>
             <TextField
               placeholder="Deck Title"
-              onChangeText={(text) => this.setState({text})}
+              value={this.state.title}
+              onChangeText={(text) => this.setState({title: text})}
             />
             <TouchableNativeFeedback onPress={this.saveDeck}>
               <NewButton>

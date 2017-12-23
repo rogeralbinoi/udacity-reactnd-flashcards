@@ -6,71 +6,17 @@ import * as color from './utils/color'
 import { Constants } from 'expo'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import AppHeader from './components/AppHeader'
-import Deck from './components/Deck'
-import Decks from './components/Decks'
-import Quiz from './components/Quiz'
-import NewDeck from './components/NewDeck'
-import AddCard from './components/AddCard'
+import { Stack, Tabs } from './routes'
+// import { setLocalNotification } from './utils/helpers'
 const Wrapper = styled.View`
   background: #fff;
   padding-bottom: 40;
 `
 
-const Tabs = TabNavigator({
-  Decks: {
-    screen: Decks,
-    navigationOptions: {
-      tabBarLabel: 'Decks',
-    }
-  },
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-    }
-  }
-},{
-  tabBarPosition: 'top',
-  animationEnabled: true,
-  tabBarOptions: {
-    activeTintColor: '#fff',
-    activeBackgroundColor: `${color.primary}`,
-    style: {
-      backgroundColor: color.primary
-    }
-  }
-})
-
-const Stack = StackNavigator({
-  Home: {
-    screen: Tabs,
-    navigationOptions: {
-      title: 'FlashCards'
-    }
-  },
-  Deck: {
-    screen: Quiz,
-    navigationOptions: {
-      title: 'Deck'
-    }
-  },
-  AddCard: {
-    screen: AddCard,
-    navigationOptions: {
-      title: 'Add Card'
-    }
-  }
-},{
-  tabBarOptions: {
-    activeTintColor: '#fff',
-    activeBackgroundColor: `${color.primary}`,
-    style: {
-      backgroundColor: color.primary
-    }
-  }
-})
-
 export default class App extends React.Component {
+  componentDidMount() {
+    // setLocalNotification()
+  }
   render() {
     return (
       <View style={{flex: 1}}>
