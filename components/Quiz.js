@@ -17,13 +17,13 @@ const Wrapper = styled.View`
 const Title = styled.Text`
   margin-top: 30;
   color: ${color.primaryBlack};
-  font-size: 30;
+  font-size: 38;
   text-align: center;
 `
 
 const QuestionsCount = styled.Text`
   color: #010101;
-  font-size: 20;
+  font-size: 24;
   text-align: center;
 `
 
@@ -44,7 +44,7 @@ export default class Quiz extends React.Component {
       <View style={{flex: 1}}>
         <DeckWrapper>
           <Title>{navigation.state.params.item.title}</Title>
-          <QuestionsCount>{navigation.state.params.item.questions.length || 0}</QuestionsCount>
+          <QuestionsCount>{navigation.state.params.item.questions.length || 0} cards</QuestionsCount>
         </DeckWrapper>
         <TouchableNativeFeedback onPress={this.saveDeck}>
           <Btn.Outline>
