@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, TouchableNativeFeedback } from 'react-native'
+import { View, Text, TouchableNativeFeedback, Alert } from 'react-native'
 import styled from 'styled-components/native'
+import * as API from '../utils/api'
 import * as color from '../utils/color'
 
 const Title = styled.Text`
@@ -23,13 +24,18 @@ const Wrapper = styled.View`
   padding-bottom:  25;
 `
 
-const Deck = ({children, questions, ...props}) => (
-  <TouchableNativeFeedback background={TouchableNativeFeedback.SelectableBackground()} {...props}>
-    <Wrapper>
-      <Title>{children}</Title>
-      <Count>{questions.length || 0} cards</Count>
-    </Wrapper>
-  </TouchableNativeFeedback>
-);
+const Deck = ({children, questions, item, ...props}) => {
+  const questionsCount = questions.length || 0
+  return (
+    <TouchableNativeFeedback 
+      background={TouchableNativeFeedback.SelectableBackground()}
+      {...props}>
+      <Wrapper>
+        <Title>{children}</Title>
+        <Count>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</Count>
+      </Wrapper>
+    </TouchableNativeFeedback>
+  )
+};
 
 export default Deck;

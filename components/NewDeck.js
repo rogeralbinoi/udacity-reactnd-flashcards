@@ -64,8 +64,12 @@ export default class NewDeck extends React.Component {
     title: ''
   }
   saveDeck = () => {
-    this.setState({title: ''})
-    this.props.navigation.goBack()
+    const {navigation, screenProps} = this.props
+    API.createDeck({title: this.state.title}).then(() => {
+      this.setState({title: ''})
+      screenProps.refreshList()
+      this.props.navigation.goBack()
+    })
   }
   render() {
     return (
@@ -75,15 +79,15 @@ export default class NewDeck extends React.Component {
         behavior="padding"
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View>
-            <Title>What is the title of your new Deck?</Title>
+            <Title>Qual é o título do seu novo Deck?</Title>
             <TextField
-              placeholder="Deck Title"
+              placeholder="Ex: Alimentos em inglês"
               value={this.state.title}
               onChangeText={(text) => this.setState({title: text})}
             />
             <TouchableNativeFeedback onPress={this.saveDeck}>
               <NewButton>
-                <ButtonText>Save Deck</ButtonText>
+                <ButtonText>Salvar Deck</ButtonText>
               </NewButton>
             </TouchableNativeFeedback>
           </View>

@@ -21,9 +21,10 @@ export const Primary = styled.View`
   margin-left: 20;
   padding-top: 15;
   padding-bottom: 15;
-  background-color: ${color.primary};
-  border-color: ${color.primary};
+  background-color:  ${color.primary};
+  border-color:  ${color.primary};
   border-width: 1;
+  opacity: ${props => props.disabled ? .5 :  1};
 `
 
 export const Outline = styled.View`
@@ -33,7 +34,8 @@ export const Outline = styled.View`
   margin-left: 20;
   padding-top: 15;
   padding-bottom: 15;
-  background-color: #fff;
+  background-color:  #fff;
   border-color: ${color.primaryBlack};
   border-width: 1;
+  opacity: ${props => props.disabled ? .5 :  1};
 `

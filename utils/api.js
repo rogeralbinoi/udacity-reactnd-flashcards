@@ -1,144 +1,51 @@
+import { AsyncStorage } from 'react-native'
+export const FLASHCARDS_STORAGE_KEY = 'FlashCards:cards'
+import uuidv1 from 'uuid/v1'
+
 export const getDecks = () => {
-  return [
-    {
-      key: '1',
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    {
-      key: '2',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '3',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '4',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '5',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '6',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '7',
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    {
-      key: '8 2',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '9 3',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '10 4',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '11 5',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    },
-    {
-      key: '12 6',
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    }
-  ]
+  // AsyncStorage.clear(FLASHCARDS_STORAGE_KEY)
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
 }
 
-export const getDeck = () => {
-  return {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
+export const getDeck = ({key}) => {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(decks => {
+    decks = JSON.parse(decks) || []
+    return decks.find(deck => deck.key === key)
+  })
+}
+
+export const createDeck = ({title}) => {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(decks => {
+    deckList = JSON.parse(decks) || []
+    const newDeckList = [...deckList, {
+      title,
+      key: uuidv1(),
+      questions: []
+    }]
+    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDeckList))
+  })
+}
+
+export const removeDeck = ({key}) => {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(decks => {
+    deckList = JSON.parse(decks) || []
+    const newDeckList = (deckList || []).filter(deck => {
+      return deck.key !== key
+    })
+    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDeckList))
+    return newDeckList
+  })
+}
+
+export const createCard = ({key, question}) => {
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(decks => {
+    const deckList = JSON.parse(decks) || []
+    const newDeckList = deckList.map(deck => {
+      if(deck.key === key) {
+        deck.questions = [...deck.questions, question]
       }
-    ]
-  }
+      return deck
+    })
+    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDeckList))
+  })
 }

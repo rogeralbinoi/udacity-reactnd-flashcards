@@ -14,17 +14,30 @@ const Wrapper = styled.View`
 `
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      decks: []
+    }
+  }
+  refreshList = () => {
+    API.getDecks().then(decks => {
+      this.setState({decks: JSON.parse(decks)}) 
+    })
+  }
   componentDidMount() {
-    // setLocalNotification()
+    this.refreshList()
   }
   render() {
+    const { decks } = this.state
+    const { refreshList } = this
     return (
       <View style={{flex: 1}}>
         <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }}>
           <StatusBar translucent backgroundColor={color.primary} />
         </View>
         <View style={{flex: 1}}>
-          <Stack />
+          <Stack screenProps={{refreshList, decks}} />
         </View>
       </View>
     );

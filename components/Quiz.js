@@ -17,7 +17,7 @@ const Wrapper = styled.View`
 const Title = styled.Text`
   margin-top: 30;
   color: ${color.primaryBlack};
-  font-size: 38;
+  font-size: 30;
   text-align: center;
 `
 
@@ -38,25 +38,46 @@ const DeckWrapper = styled.View`
 `
 
 export default class Quiz extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      item: {
+        title: '',
+        questions: []
+      }
+    }
+  }
+  refreshDeck = () => {
+    const { key } = this.props.navigation.state.params.item
+    API.getDeck({key}).then(item => {
+      this.setState({item})
+    })
+  }
+  componentDidMount() {
+    this.refreshDeck()
+  }
   render() {
-    const {navigation} = this.props
-    return (
+    const { navigation } = this.props
+    const { item } = this.state
+    const questionsCount = item.questions.length || 0
+    return item &&
+      (
       <View style={{flex: 1}}>
         <DeckWrapper>
-          <Title>{navigation.state.params.item.title}</Title>
-          <QuestionsCount>{navigation.state.params.item.questions.length || 0} cards</QuestionsCount>
+          <Title>{item.title}</Title>
+          <QuestionsCount>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</QuestionsCount>
         </DeckWrapper>
-        <TouchableNativeFeedback onPress={this.saveDeck}>
+        <TouchableNativeFeedback onPress={() => {navigation.navigate('AddCard', {item, refreshDeck: this.refreshDeck})}}>
           <Btn.Outline>
-            <Btn.OutlineText onPress={() => {navigation.navigate('AddCard')}}>Add Card</Btn.OutlineText>
+            <Btn.OutlineText>Adicionar Card</Btn.OutlineText>
           </Btn.Outline>
         </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={this.saveDeck}>
+        <TouchableNativeFeedback onPress={() => {navigation.navigate('Card', {item})}}>
           <Btn.Primary>
-            <Btn.PrimaryText>Start Quiz</Btn.PrimaryText>
+            <Btn.PrimaryText>Iniciar Quiz</Btn.PrimaryText>
           </Btn.Primary>
         </TouchableNativeFeedback>
       </View>
-    );
+    )
   }
 }

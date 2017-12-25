@@ -4,6 +4,7 @@ import Deck from '../components/Deck'
 import Decks from '../components/Decks'
 import Quiz from '../components/Quiz'
 import NewDeck from '../components/NewDeck'
+import Card from '../components/Card'
 import AddCard from '../components/AddCard'
 
 export const Tabs = TabNavigator({
@@ -16,7 +17,7 @@ export const Tabs = TabNavigator({
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      tabBarLabel: 'New Deck',
+      tabBarLabel: 'Novo Deck',
     }
   }
 },
@@ -49,17 +50,14 @@ export const Stack = StackNavigator({
   AddCard: {
     screen: AddCard,
     navigationOptions: {
-      title: 'Add Card'
+      title: 'Novo Card'
+    }
+  },
+  Card: {
+    screen: Card,
+    navigationOptions: {
+      title: 'Quiz'
     }
   }
-},
-  {
-    tabBarOptions: {
-      activeTintColor: '#fff',
-      activeBackgroundColor: `${color.primary}`,
-      style: {
-        backgroundColor: color.primary
-      }
-    }
-  }
+}
 )

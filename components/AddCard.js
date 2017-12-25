@@ -66,8 +66,20 @@ const Label = styled.Text`
 `
 
 export default class AddCard extends React.Component {
+  state = {
+    question: '',
+    answer: ''
+  }
   saveDeck = () => {
-    this.props.navigation.goBack()
+    const {navigation, screenProps} = this.props
+    const { key } = navigation.state.params.item
+    const { refreshDeck } = navigation.state.params
+    const {question, answer} = this.state
+    API.createCard({key, question: { question, answer}}).then(() => {
+      screenProps.refreshList()
+      refreshDeck()
+      navigation.goBack()
+    })
   }
   render() {
     return (
@@ -77,19 +89,21 @@ export default class AddCard extends React.Component {
         behavior="padding"
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View style={{width: '100%'}}>
-            <Label>Question</Label>
+            <Label>Pergunta</Label>
             <TextField
-              placeholder="Your Question"
-              onChangeText={(text) => this.setState({text})}
+              placeholder="Ex: Como diz Arroz em inglês?"
+              value={this.state.question}
+              onChangeText={(text) => this.setState({question: text})}
             />
-            <Label>Answer</Label>
+            <Label>Resposta</Label>
             <TextField
-              placeholder="Answer"
-              onChangeText={(text) => this.setState({text})}
+              placeholder="Ex: Rice."
+              value={this.state.answer}
+              onChangeText={(text) => this.setState({answer: text})}
             />
             <TouchableNativeFeedback onPress={this.saveDeck}>
               <NewButton>
-                <ButtonText>Save Card</ButtonText>
+                <ButtonText>Salvar Card</ButtonText>
               </NewButton>
             </TouchableNativeFeedback>
           </View>
