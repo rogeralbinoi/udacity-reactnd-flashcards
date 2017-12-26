@@ -4,10 +4,9 @@ import styled from 'styled-components/native'
 import * as API from './utils/api'
 import * as color from './utils/color'
 import { Constants } from 'expo'
-import { TabNavigator, StackNavigator } from 'react-navigation'
 import AppHeader from './components/AppHeader'
-import { Stack, Tabs } from './routes'
-// import { setLocalNotification } from './utils/helpers'
+import RootNavigator from './routes'
+
 const Wrapper = styled.View`
   background: #fff;
   padding-bottom: 40;
@@ -37,7 +36,7 @@ export default class App extends React.Component {
           <StatusBar translucent backgroundColor={color.primary} />
         </View>
         <View style={{flex: 1}}>
-          <Stack screenProps={{refreshList, decks}} />
+          <RootNavigator screenProps={{refreshList, decks}} />
         </View>
       </View>
     );

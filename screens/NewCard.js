@@ -1,22 +1,12 @@
 import React from 'react';
 import { 
-  StyleSheet,
-  Text,
   View,
-  FlatList,
-  StatusBar,
   KeyboardAvoidingView,
-  TouchableNativeFeedback,
-  TextInput,
-  Button
+  TouchableNativeFeedback
 } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
-import { Constants } from 'expo'
-import AppHeader from './AppHeader'
-import Deck from './Deck'
-import Decks from './Decks'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -35,9 +25,9 @@ const Title = styled.Text`
 
 const TextField = styled.TextInput`
   height: 50;
-  margin-top: 20;
+  margin-top: 0;
   margin-right: 20;
-  margin-bottom: 20;
+  margin-bottom: 0;
   margin-left: 20;
   padding-top: 10;
   padding-bottom: 10;
@@ -59,16 +49,26 @@ const ButtonText = styled.Text`
   font-size: 16;
 `
 
-export default class NewDeck extends React.Component {
+const Label = styled.Text`
+  padding-left: 20;
+  padding-right: 20;
+  margin-top: 15;
+`
+
+export default class NewCard extends React.Component {
   state = {
-    title: ''
+    question: '',
+    answer: ''
   }
   saveDeck = () => {
     const {navigation, screenProps} = this.props
-    API.createDeck({title: this.state.title}).then(() => {
-      this.setState({title: ''})
+    const { key } = navigation.state.params.item
+    const { refreshDeck } = navigation.state.params
+    const {question, answer} = this.state
+    API.createCard({key, question: { question, answer}}).then(() => {
       screenProps.refreshList()
-      this.props.navigation.goBack()
+      refreshDeck()
+      navigation.goBack()
     })
   }
   render() {
@@ -78,16 +78,22 @@ export default class NewDeck extends React.Component {
         scrollEnabled={true}
         behavior="padding"
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View>
-            <Title>Qual é o título do seu novo Deck?</Title>
+          <View style={{width: '100%'}}>
+            <Label>Pergunta</Label>
             <TextField
-              placeholder="Ex: Alimentos em inglês"
-              value={this.state.title}
-              onChangeText={(text) => this.setState({title: text})}
+              placeholder="Ex: Como diz Arroz em inglês?"
+              value={this.state.question}
+              onChangeText={(text) => this.setState({question: text})}
+            />
+            <Label>Resposta</Label>
+            <TextField
+              placeholder="Ex: Rice."
+              value={this.state.answer}
+              onChangeText={(text) => this.setState({answer: text})}
             />
             <TouchableNativeFeedback onPress={this.saveDeck}>
               <NewButton>
-                <ButtonText>Salvar Deck</ButtonText>
+                <ButtonText>Salvar Card</ButtonText>
               </NewButton>
             </TouchableNativeFeedback>
           </View>

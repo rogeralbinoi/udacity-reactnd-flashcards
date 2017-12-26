@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableNativeFeedback } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import styled from 'styled-components/native'
-import * as Btn from './Btn'
+import * as Btn from '../components/Btn'
 import * as color from '../utils/color'
 
 const Title = styled.Text`

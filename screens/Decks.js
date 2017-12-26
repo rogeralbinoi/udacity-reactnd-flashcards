@@ -1,12 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, StatusBar, Vibration, Alert } from 'react-native';
+import { FlatList, Vibration, Alert } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
-import { Constants } from 'expo'
-import AppHeader from './AppHeader'
-import Deck from './Deck'
-import Decks from './Decks'
+import Deck from '../components/Deck'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -29,7 +26,7 @@ const FirstDeckMessageWrapper = styled.View`
   align-items: center;
 `
 
-export default class App extends React.Component {
+export default class Decks extends React.Component {
   handleLongPress = ({item}) => {
     Vibration.vibrate(100)
     Alert.alert(

@@ -1,13 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, StatusBar, TouchableNativeFeedback } from 'react-native';
+import {View, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
-import { Constants } from 'expo'
-import AppHeader from './AppHeader'
-import Deck from './Deck'
-import Decks from './Decks'
-import * as Btn from './Btn'
+import * as Btn from '../components/Btn'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -67,7 +63,7 @@ export default class Quiz extends React.Component {
           <Title>{item.title}</Title>
           <QuestionsCount>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</QuestionsCount>
         </DeckWrapper>
-        <TouchableNativeFeedback onPress={() => {navigation.navigate('AddCard', {item, refreshDeck: this.refreshDeck})}}>
+        <TouchableNativeFeedback onPress={() => {navigation.navigate('NewCard', {item, refreshDeck: this.refreshDeck})}}>
           <Btn.Outline>
             <Btn.OutlineText>Adicionar Card</Btn.OutlineText>
           </Btn.Outline>
