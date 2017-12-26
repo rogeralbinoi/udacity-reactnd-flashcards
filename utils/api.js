@@ -17,12 +17,14 @@ export const getDeck = ({key}) => {
 export const createDeck = ({title}) => {
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(decks => {
     deckList = JSON.parse(decks) || []
-    const newDeckList = [...deckList, {
+    const newDeck = {
       title,
       key: uuidv1(),
       questions: []
-    }]
+    }
+    const newDeckList = [...deckList, newDeck]
     AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newDeckList))
+    return newDeck
   })
 }
 

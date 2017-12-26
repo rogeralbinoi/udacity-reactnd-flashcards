@@ -92,12 +92,15 @@ export default class Card extends Component {
     this.setState(({currentQuestion, score}) => {
       if(currentQuestion + 1 >= item.questions.length) {
         const resetAction = NavigationActions.reset({
-          index: 0,
+          index: 2,
           actions: [
-            NavigationActions.navigate({ routeName: 'Finish', params: {item, score: answer ? score + 1 : score}})
+            NavigationActions.navigate({ routeName: 'Home'}),
+            NavigationActions.navigate({ routeName: 'Deck', params: {item}}),
+            NavigationActions.navigate({ routeName: 'Finish', params: {item, score: answer ? score + 1 :  score}})
           ]
         })
         this.props.navigation.dispatch(resetAction)
+        return false
       }
       return {
         currentQuestion: currentQuestion + 1 < item.questions.length ? currentQuestion + 1 :  currentQuestion,
