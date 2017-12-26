@@ -7,6 +7,7 @@ import {
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
+import Loader from '../components/Loader'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -58,21 +59,29 @@ const Label = styled.Text`
 export default class NewCard extends React.Component {
   state = {
     question: '',
-    answer: ''
+    answer: '',
+    loadingDeck: false
   }
   saveDeck = () => {
     const {navigation, screenProps} = this.props
     const { key } = navigation.state.params.item
     const { refreshDeck } = navigation.state.params
     const {question, answer} = this.state
+    this.setState({loadingDeck: true})
     API.createCard({key, question: { question, answer}}).then(() => {
-      screenProps.refreshList()
-      refreshDeck()
-      navigation.goBack()
+      screenProps.refreshList().then(() => {
+        refreshDeck().then(navigation.goBack)
+      })
     })
   }
-  render() {
+  renderLoading = () => {
     return (
+      <Loader />
+    )
+  }
+  render() {
+    const { loadingDeck } = this.state
+    return !loadingDeck ? (
       <KeyboardAvoidingView 
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={true}
@@ -98,6 +107,6 @@ export default class NewCard extends React.Component {
             </TouchableNativeFeedback>
           </View>
       </KeyboardAvoidingView>
-    );
+    ) : this.renderLoading()
   }
 }

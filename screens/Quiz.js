@@ -46,7 +46,7 @@ export default class Quiz extends React.Component {
   }
   refreshDeck = () => {
     const { key } = this.props.navigation.state.params.item
-    API.getDeck({key}).then(item => {
+    return API.getDeck({key}).then(item => {
       this.setState({item})
     })
   }
