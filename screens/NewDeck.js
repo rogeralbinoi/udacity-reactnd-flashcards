@@ -55,9 +55,9 @@ export default class NewDeck extends React.Component {
   }
   saveDeck = () => {
     const {navigation, screenProps} = this.props
-    API.createDeck({title: this.state.title}).then(() => {
+    API.createDeck({title: this.state.title}).then((item) => {
       this.setState({title: ''})
-      screenProps.refreshList()
+      screenProps.newDeck({navigation, item})
       this.props.navigation.goBack()
     })
   }

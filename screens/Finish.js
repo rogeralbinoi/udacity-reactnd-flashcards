@@ -5,6 +5,7 @@ import { NavigationActions } from 'react-navigation'
 import * as API from '../utils/api'
 import * as Btn from '../components/Btn'
 import * as color from '../utils/color'
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
 
 const Title = styled.Text`
   color: ${color.primaryBlack};
@@ -46,6 +47,9 @@ class Finish extends Component {
       ]
     })
     this.props.navigation.dispatch(resetAction)
+  }
+  componentDidMount() {
+    clearLocalNotification().then(setLocalNotification)
   }
   render() {
       const { item, score } = this.props.navigation.state.params
