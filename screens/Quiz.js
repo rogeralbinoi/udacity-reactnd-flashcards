@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
 import * as Btn from '../components/Btn'
+import Loader from '../components/Loader'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -52,12 +53,16 @@ export default class Quiz extends React.Component {
   componentDidMount() {
     this.refreshDeck()
   }
-  render() {
-    const { navigation } = this.props
+  renderLoading = () => {
+    return (
+      <Loader />
+    )
+  }
+  renderQuiz() {
+    const { navigation, screenProps } = this.props
     const { item } = this.state
     const questionsCount = item.questions.length || 0
-    return item &&
-      (
+    return item && (
       <View style={{flex: 1}}>
         <DeckWrapper>
           <Title>{item.title}</Title>
@@ -75,5 +80,11 @@ export default class Quiz extends React.Component {
         </TouchableNativeFeedback>
       </View>
     )
+  }
+  render() {
+    const { navigation, screenProps } = this.props
+    const { item } = this.state
+    const questionsCount = item.questions.length || 0
+    return !screenProps.fetchedDecks && this.renderLoading() || this.renderQuiz()
   }
 }

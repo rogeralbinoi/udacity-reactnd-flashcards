@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
 import Deck from '../components/Deck'
+import Loader from '../components/Loader'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -45,7 +46,7 @@ export default class Decks extends React.Component {
       screenProps.refreshList()
     })
   }
-  render() {
+  renderDecks = () => {
     const {navigation, screenProps} = this.props
     return screenProps.decks.length ? (
       <FlatList
@@ -64,5 +65,14 @@ export default class Decks extends React.Component {
         <FirstDeckMessage>Crie seu primeiro deck!! 🙂</FirstDeckMessage>
       </FirstDeckMessageWrapper>
     );
+  }
+  renderLoading = () => {
+    return (
+      <Loader />
+    )
+  }
+  render() {
+    const {navigation, screenProps} = this.props
+    return !screenProps.fetchedDecks && this.renderLoading() || this.renderDecks()
   }
 }

@@ -18,12 +18,15 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      decks: []
+      decks: [],
+      loadingDecks: false,
+      fetchedDecks: false
     }
   }
   refreshList = () => {
+    this.setState({loadingDecks: true, fetchedDecks: false})
     return API.getDecks().then(decks => {
-      this.setState({decks: JSON.parse(decks)}) 
+      this.setState({decks: JSON.parse(decks), fetchedDecks: true, loadingDecks: false}) 
     })
   }
   componentDidMount() {
@@ -45,7 +48,7 @@ export default class App extends React.Component {
     this.refreshList()
   }
   render() {
-    const { decks } = this.state
+    const { decks, loadingDecks, fetchedDecks } = this.state
     const { refreshList, newDeck } = this
     return (
       <View style={{flex: 1}}>
@@ -53,7 +56,7 @@ export default class App extends React.Component {
           <StatusBar translucent backgroundColor={color.primary} />
         </View>
         <View style={{flex: 1}}>
-          <RootNavigator screenProps={{refreshList, newDeck, decks}} />
+          <RootNavigator screenProps={{refreshList, newDeck, decks, loadingDecks, fetchedDecks}} />
         </View>
       </View>
     );
