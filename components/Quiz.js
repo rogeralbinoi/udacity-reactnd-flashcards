@@ -72,8 +72,8 @@ export default class Quiz extends React.Component {
             <Btn.OutlineText>Adicionar Card</Btn.OutlineText>
           </Btn.Outline>
         </TouchableNativeFeedback>
-        <TouchableNativeFeedback onPress={() => {navigation.navigate('Card', {item})}}>
-          <Btn.Primary>
+        <TouchableNativeFeedback disabled={!questionsCount} onPress={() => {navigation.navigate('Card', {item})}}>
+          <Btn.Primary disabled={!questionsCount}>
             <Btn.PrimaryText>Iniciar Quiz</Btn.PrimaryText>
           </Btn.Primary>
         </TouchableNativeFeedback>

@@ -6,6 +6,7 @@ import Quiz from '../components/Quiz'
 import NewDeck from '../components/NewDeck'
 import Card from '../components/Card'
 import AddCard from '../components/AddCard'
+import Finish from '../components/Finish'
 
 export const Tabs = TabNavigator({
   Decks: {
@@ -57,6 +58,12 @@ export const Stack = StackNavigator({
     screen: Card,
     navigationOptions: {
       title: 'Quiz'
+    }
+  },
+  Finish: {
+    screen: Finish,
+    navigationOptions: {
+      title: 'Fim'
     }
   }
 }
