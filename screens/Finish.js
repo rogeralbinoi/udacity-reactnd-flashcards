@@ -52,8 +52,8 @@ class Finish extends Component {
     clearLocalNotification().then(setLocalNotification)
   }
   render() {
-      const { item, score } = this.props.navigation.state.params
-      const questionsCount = item.questions.length || 0
+      const { item = {}, score } = this.props.navigation.state.params
+      const questionsCount = (item.questions || {}).length || 0
       return (
         <Wrapper>
           <Title>{item.title}</Title>

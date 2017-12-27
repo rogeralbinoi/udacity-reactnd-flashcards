@@ -60,8 +60,8 @@ export default class Quiz extends React.Component {
   }
   renderQuiz() {
     const { navigation, screenProps } = this.props
-    const { item } = this.state
-    const questionsCount = item.questions.length || 0
+    const { item = {} } = this.state
+    const questionsCount = (item.questions || []).length || 0
     return item && (
       <View style={{flex: 1}}>
         <DeckWrapper>
@@ -83,8 +83,8 @@ export default class Quiz extends React.Component {
   }
   render() {
     const { navigation, screenProps } = this.props
-    const { item } = this.state
-    const questionsCount = item.questions.length || 0
+    const { item = {} } = this.state
+    const questionsCount = (item.questions || []).length || 0
     return !screenProps.fetchedDecks && this.renderLoading() || this.renderQuiz()
   }
 }

@@ -47,8 +47,8 @@ export default class Decks extends React.Component {
     })
   }
   renderDecks = () => {
-    const {navigation, screenProps} = this.props
-    return screenProps.decks.length ? (
+    const {navigation, screenProps = {}} = this.props
+    return (screenProps.decks || []).length ? (
       <FlatList
         data={screenProps.decks}
         renderItem={({item}) => (

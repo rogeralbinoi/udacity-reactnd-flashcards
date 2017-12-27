@@ -24,7 +24,7 @@ const Wrapper = styled.View`
   padding-bottom:  25;
 `
 
-const Deck = ({children, questions, item, ...props}) => {
+const Deck = ({children, questions = [], item = {}, ...props}) => {
   const questionsCount = questions.length || 0
   return (
     <TouchableNativeFeedback 

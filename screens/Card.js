@@ -88,9 +88,9 @@ export default class Card extends Component {
   }
   nextCard = (answer) => {
     const { navigation } = this.props
-    const { item } = navigation.state.params
+    const { item = {} } = navigation.state.params
     this.setState(({currentQuestion, score}) => {
-      if(currentQuestion + 1 >= item.questions.length) {
+      if(currentQuestion + 1 >= (item.questions || []).length) {
         const resetAction = NavigationActions.reset({
           index: 2,
           actions: [
@@ -103,7 +103,7 @@ export default class Card extends Component {
         return false
       }
       return {
-        currentQuestion: currentQuestion + 1 < item.questions.length ? currentQuestion + 1 :  currentQuestion,
+        currentQuestion: currentQuestion + 1 < (item.questions || []).length ? currentQuestion + 1 :  currentQuestion,
         disableCard: true,
         fliped: false,
         score: answer ? score + 1 :  score
@@ -118,7 +118,7 @@ export default class Card extends Component {
     return (
       <Wrapper>
         <Steps>
-          <Step>{`${currentQuestion + 1}/${item.questions.length || 0}`}</Step>
+          <Step>{`${currentQuestion + 1}/${(item.questions || {}).length || 0}`}</Step>
         </Steps>
         <CardWrapper> 
           <FlipCard 
