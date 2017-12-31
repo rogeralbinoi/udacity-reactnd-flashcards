@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+    "name": "FlashCards",
+    "slug": "flash-cards",
+    "sdkVersion": "23.0.0",
+    "privacy": "public",
+    "android": { "package": "br.com.rogeralbino" },
+    "icon": "./assets/imgs/logo.png",
+    "notification": {
+      "icon": "./assets/imgs/logo.png",
+      "color": "#000000"
+    },
+    "loading": {
+      "icon": "./assets/imgs/logo.png",
+      "hideExponentText": false
+    }
   }
 }
