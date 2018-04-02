@@ -3,7 +3,7 @@ import {View, TouchableNativeFeedback } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
-import * as Btn from '../components/Btn'
+import { Button, Icon } from 'react-native-elements'
 import Loader from '../components/Loader'
 
 const Wrapper = styled.View`
@@ -68,16 +68,27 @@ export default class Quiz extends React.Component {
           <Title>{item.title}</Title>
           <QuestionsCount>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</QuestionsCount>
         </DeckWrapper>
-        <TouchableNativeFeedback onPress={() => {navigation.navigate('NewCard', {item, refreshDeck: this.refreshDeck})}}>
-          <Btn.Outline>
-            <Btn.OutlineText>Adicionar Card</Btn.OutlineText>
-          </Btn.Outline>
-        </TouchableNativeFeedback>
-        <TouchableNativeFeedback disabled={!questionsCount} onPress={() => {navigation.navigate('Card', {item})}}>
-          <Btn.Primary disabled={!questionsCount}>
-            <Btn.PrimaryText>Iniciar Quiz</Btn.PrimaryText>
-          </Btn.Primary>
-        </TouchableNativeFeedback>
+
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Button
+            raised
+            large
+            icon={{name: 'plus', type: 'font-awesome', size: 15}}
+            backgroundColor={color.success}
+            containerViewStyle={{marginBottom: 10, flex: 1}}
+            onPress={() => {navigation.navigate('NewCard', {item, refreshDeck: this.refreshDeck})}}
+            title='Card' />
+
+          <Button
+            raised
+            large
+            icon={{name: 'play', type: 'font-awesome', size: 15}}
+            disabled={!questionsCount}
+            containerViewStyle={{marginBottom: 10, flex: 1}}
+            backgroundColor={color.primary}
+            onPress={() => {navigation.navigate('Card', {item})}}
+            title='Iniciar Quiz' />
+        </View>
       </View>
     )
   }

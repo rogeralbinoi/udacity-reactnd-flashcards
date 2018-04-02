@@ -7,6 +7,7 @@ import {
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
+import { Button, FormLabel, FormInput } from 'react-native-elements'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -23,31 +24,15 @@ const Title = styled.Text`
   padding-left: 20;
 `
 
-const TextField = styled.TextInput`
-  height: 50;
-  margin-top: 20;
-  margin-right: 20;
-  margin-bottom: 20;
-  margin-left: 20;
-  padding-top: 10;
-  padding-bottom: 10;
-  font-size: 18;
-`
-
-const NewButton = styled.View`
-  margin-top: 20;
-  margin-right: 20;
-  margin-bottom: 20;
-  margin-left: 20;
-  padding-top: 15;
-  padding-bottom: 15;
-  background-color: ${color.primary};
-`
-const ButtonText = styled.Text`
-  color: #fff;
-  text-align: center;
-  font-size: 16;
-`
+const TextField = {
+  height: 50,
+  marginTop: 20,
+  marginBottom: 20,
+  paddingTop: 10,
+  paddingBottom: 10,
+  fontSize: 18,
+  color: '#000'
+}
 
 export default class NewDeck extends React.Component {
   state = {
@@ -67,19 +52,21 @@ export default class NewDeck extends React.Component {
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={true}
         behavior="padding"
-        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
           <View>
             <Title>Qual é o título do seu novo Deck?</Title>
-            <TextField
+            <FormInput
+              inputStyle={TextField}
               placeholder="Ex: Alimentos em inglês"
               value={this.state.title}
               onChangeText={(text) => this.setState({title: text})}
             />
-            <TouchableNativeFeedback onPress={this.saveDeck}>
-              <NewButton>
-                <ButtonText>Salvar Deck</ButtonText>
-              </NewButton>
-            </TouchableNativeFeedback>
+            <Button
+              raised
+              onPress={this.saveDeck}
+              backgroundColor={color.primary}
+              title="Salvar Deck">
+            </Button>
           </View>
       </KeyboardAvoidingView>
     );

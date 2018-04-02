@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { View, Text, TouchableNativeFeedback } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import styled from 'styled-components/native'
-import * as Btn from '../components/Btn'
+import { Button } from 'react-native-elements'
 import * as color from '../utils/color'
 
 const Title = styled.Text`
-  color: ${color.primaryBlack};
+  color: ${(props) => props.hideResponse ? 'transparent' : color.primaryBlack};
   font-size: 24;
   text-align: center;
 `
@@ -75,14 +75,26 @@ export default class Card extends Component {
     disableCard: true,
     currentQuestion: 0,
     fliped: false,
-    score: 0
+    score: 0,
+    hideResponse: true
   }
   handleFlipEnd = (fliped) => {
     this.setState(() => {
       const disableCard = !fliped
+      const hideResponse = false;
       return {
         fliped,
+        hideResponse,
         disableCard
+      }
+    })
+  }
+  handleFlipStart = (fliped) => {
+    this.setState(() => {
+      const hideResponse = true;
+      return {
+        fliped,
+        hideResponse
       }
     })
   }
@@ -105,6 +117,7 @@ export default class Card extends Component {
       return {
         currentQuestion: currentQuestion + 1 < (item.questions || []).length ? currentQuestion + 1 :  currentQuestion,
         disableCard: true,
+        hideResponse: true,
         fliped: false,
         score: answer ? score + 1 :  score
       }
@@ -113,8 +126,7 @@ export default class Card extends Component {
   render() {
     const {children, questions, navigation, ...props} = this.props
     const { item } = navigation.state.params
-    const { disableCard, fliped, currentQuestion, score } = this.state
-    console.log('navigation', navigation)
+    const { disableCard, fliped, currentQuestion, score, hideResponse } = this.state
     return (
       <Wrapper>
         <Steps>
@@ -129,26 +141,33 @@ export default class Card extends Component {
             flip={fliped}
             clickable={true}
             onFlipEnd={this.handleFlipEnd}
+            onFlipStart={this.handleFlipStart}
             syle={{borderWidth: 0}}>
             <CardFront>
               <Title>{item.questions[currentQuestion].question}</Title>
             </CardFront>
             <CardBack>
-              <Title>{item.questions[currentQuestion].answer}</Title>
+              <Title hideResponse={hideResponse}>{item.questions[currentQuestion].answer}</Title>
             </CardBack>
           </FlipCard>
         </CardWrapper>
-        <View style={{justifyContent: 'center', width: '100%'}}>
-          <TouchableNativeFeedback disabled={disableCard} onPress={() => {this.nextCard(true)}}>
-            <Btn.Outline disabled={disableCard}>
-              <Btn.OutlineText>Acertei</Btn.OutlineText>
-            </Btn.Outline>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback disabled={disableCard} onPress={() => {this.nextCard(false)}}>
-            <Btn.Primary disabled={disableCard}>
-              <Btn.PrimaryText>Errei</Btn.PrimaryText>
-            </Btn.Primary>
-          </TouchableNativeFeedback>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Button
+            raised
+            large
+            containerViewStyle={{marginBottom: 10, flex: 1}}
+            backgroundColor={color.danger}
+            icon={{name: 'times', type: 'font-awesome', size: 15}}
+            disabled={disableCard} onPress={() => {this.nextCard(false)}}
+            title='Errei' />
+          <Button
+            raised
+            large
+            disabled={disableCard} onPress={() => {this.nextCard(true)}}
+            backgroundColor={color.success}
+            icon={{name: 'check', type: 'font-awesome', size: 15}}
+            containerViewStyle={{marginBottom: 10, flex: 1}}
+            title='Acertei' />
         </View>
       </Wrapper>
       )

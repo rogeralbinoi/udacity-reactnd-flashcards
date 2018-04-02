@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableNativeFeedback } from 'react-native'
 import styled from 'styled-components/native'
+import { Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import * as API from '../utils/api'
-import * as Btn from '../components/Btn'
 import * as color from '../utils/color'
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
 
@@ -56,19 +56,25 @@ class Finish extends Component {
       const questionsCount = (item.questions || {}).length || 0
       return (
         <Wrapper>
+          
           <Title>{item.title}</Title>
           <Count>{`Você acertou ${score} de ${questionsCount}`}</Count>
-          <View style={{justifyContent: 'center', width: 200, marginTop: 30}}>
-            <TouchableNativeFeedback onPress={() => { this.restartQuiz(item) }}>
-              <Btn.Outline>
-                <Btn.OutlineText>Recomeçar Quiz</Btn.OutlineText>
-              </Btn.Outline>
-            </TouchableNativeFeedback>
-            <TouchableNativeFeedback onPress={() => { this.backToDeck() }}>
-              <Btn.Primary>
-                <Btn.PrimaryText>Voltar ao baralho</Btn.PrimaryText>
-              </Btn.Primary>
-            </TouchableNativeFeedback>
+
+          <View style={{justifyContent: 'center', marginTop: 20}}>
+            <Button
+              raised
+              icon={{name: 'refresh', type: 'font-awesome', size: 15}}
+              containerViewStyle={{marginBottom: 10}}
+              backgroundColor={color.primary}
+              onPress={() => { this.restartQuiz(item) }}
+              title='Recomeçar quiz' />
+            <Button
+              raised
+              onPress={() => { this.backToDeck() }}
+              icon={{name: 'chevron-left', type: 'font-awesome', size: 15}}
+              backgroundColor={color.primaryBlack}
+              containerViewStyle={{marginBottom: 10}}
+              title='Voltar ao baralho' />
           </View>
         </Wrapper>
       )

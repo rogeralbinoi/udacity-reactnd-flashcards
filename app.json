@@ -5,6 +5,9 @@
     "sdkVersion": "23.0.0",
     "privacy": "public",
     "android": { "package": "br.com.rogeralbino" },
+    "ios": {
+      "bundleIdentifier": "br.com.rogeralbino"
+    },
     "icon": "./assets/imgs/logo.png",
     "notification": {
       "icon": "./assets/imgs/logo.png",

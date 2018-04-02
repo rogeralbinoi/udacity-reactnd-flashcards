@@ -53,7 +53,7 @@ export default class App extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }}>
-          <StatusBar translucent backgroundColor={color.primary} />
+          <StatusBar translucent backgroundColor={color.primary}  barStyle="light-content" />
         </View>
         <View style={{flex: 1}}>
           <RootNavigator screenProps={{refreshList, newDeck, decks, loadingDecks, fetchedDecks}} />

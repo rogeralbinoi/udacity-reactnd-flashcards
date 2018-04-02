@@ -8,6 +8,8 @@ import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
 import Loader from '../components/Loader'
+import { Button } from 'react-native-elements';
+import { FormLabel, FormInput } from 'react-native-elements'
 
 const Wrapper = styled.View`
   background: #fff;
@@ -33,21 +35,6 @@ const TextField = styled.TextInput`
   padding-top: 10;
   padding-bottom: 10;
   font-size: 18;
-`
-
-const NewButton = styled.View`
-  margin-top: 20;
-  margin-right: 20;
-  margin-bottom: 20;
-  margin-left: 20;
-  padding-top: 15;
-  padding-bottom: 15;
-  background-color: ${color.primary};
-`
-const ButtonText = styled.Text`
-  color: #fff;
-  text-align: center;
-  font-size: 16;
 `
 
 const Label = styled.Text`
@@ -88,23 +75,27 @@ export default class NewCard extends React.Component {
         behavior="padding"
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <View style={{width: '100%'}}>
-            <Label>Pergunta</Label>
-            <TextField
+            <FormLabel>Pergunta</FormLabel>
+            <FormInput
               placeholder="Ex: Como diz Arroz em inglês?"
+              inputStyle={{fontSize: 18}}
               value={this.state.question}
               onChangeText={(text) => this.setState({question: text})}
             />
-            <Label>Resposta</Label>
-            <TextField
+            <FormLabel>Resposta</FormLabel>
+            <FormInput
               placeholder="Ex: Rice."
+              inputStyle={{fontSize: 18}}
               value={this.state.answer}
               onChangeText={(text) => this.setState({answer: text})}
             />
-            <TouchableNativeFeedback onPress={this.saveDeck}>
-              <NewButton>
-                <ButtonText>Salvar Card</ButtonText>
-              </NewButton>
-            </TouchableNativeFeedback>
+            <Button
+              raised
+              large
+              containerViewStyle={{marginTop: 20}}
+              onPress={this.saveDeck}
+              backgroundColor={color.primary}
+              title="Salvar Deck" />
           </View>
       </KeyboardAvoidingView>
     ) : this.renderLoading()
