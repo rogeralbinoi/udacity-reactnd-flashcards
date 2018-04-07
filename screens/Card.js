@@ -1,6 +1,6 @@
 import FlipCard from 'react-native-flip-card'
 import React, { Component } from 'react'
-import { View, Text, TouchableNativeFeedback } from 'react-native'
+import { View, Text, TouchableNativeFeedback, SafeAreaView} from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import styled from 'styled-components/native'
 import { Button } from 'react-native-elements'
@@ -38,7 +38,7 @@ const CardBack = styled.View`
 `
 
 const CardText = styled.View`
-  flex: 1
+  flex: 1;
 `
 
 const CardWrapper = styled.View`
@@ -128,48 +128,50 @@ export default class Card extends Component {
     const { item } = navigation.state.params
     const { disableCard, fliped, currentQuestion, score, hideResponse } = this.state
     return (
-      <Wrapper>
-        <Steps>
-          <Step>{`${currentQuestion + 1}/${(item.questions || {}).length || 0}`}</Step>
-        </Steps>
-        <CardWrapper> 
-          <FlipCard 
-            perspective={1000}
-            friction={6}
-            flipHorizontal={true}
-            flipVertical={false}
-            flip={fliped}
-            clickable={true}
-            onFlipEnd={this.handleFlipEnd}
-            onFlipStart={this.handleFlipStart}
-            syle={{borderWidth: 0}}>
-            <CardFront>
-              <Title>{item.questions[currentQuestion].question}</Title>
-            </CardFront>
-            <CardBack>
-              <Title hideResponse={hideResponse}>{item.questions[currentQuestion].answer}</Title>
-            </CardBack>
-          </FlipCard>
-        </CardWrapper>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Button
-            raised
-            large
-            containerViewStyle={{marginBottom: 10, flex: 1}}
-            backgroundColor={color.danger}
-            icon={{name: 'times', type: 'font-awesome', size: 15}}
-            disabled={disableCard} onPress={() => {this.nextCard(false)}}
-            title='Errei' />
-          <Button
-            raised
-            large
-            disabled={disableCard} onPress={() => {this.nextCard(true)}}
-            backgroundColor={color.success}
-            icon={{name: 'check', type: 'font-awesome', size: 15}}
-            containerViewStyle={{marginBottom: 10, flex: 1}}
-            title='Acertei' />
-        </View>
-      </Wrapper>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+        <Wrapper>
+          <Steps>
+            <Step>{`${currentQuestion + 1}/${(item.questions || {}).length || 0}`}</Step>
+          </Steps>
+          <CardWrapper> 
+            <FlipCard 
+              perspective={1000}
+              friction={6}
+              flipHorizontal={true}
+              flipVertical={false}
+              flip={fliped}
+              clickable={true}
+              onFlipEnd={this.handleFlipEnd}
+              onFlipStart={this.handleFlipStart}
+              syle={{borderWidth: 0}}>
+              <CardFront>
+                <Title>{item.questions[currentQuestion].question}</Title>
+              </CardFront>
+              <CardBack>
+                <Title hideResponse={hideResponse}>{item.questions[currentQuestion].answer}</Title>
+              </CardBack>
+            </FlipCard>
+          </CardWrapper>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button
+              raised
+              large
+              containerViewStyle={{marginBottom: 10, flex: 1}}
+              backgroundColor={color.danger}
+              icon={{name: 'times', type: 'font-awesome', size: 15}}
+              disabled={disableCard} onPress={() => {this.nextCard(false)}}
+              title='Errei' />
+            <Button
+              raised
+              large
+              disabled={disableCard} onPress={() => {this.nextCard(true)}}
+              backgroundColor={color.success}
+              icon={{name: 'check', type: 'font-awesome', size: 15}}
+              containerViewStyle={{marginBottom: 10, flex: 1}}
+              title='Acertei' />
+          </View>
+        </Wrapper>
+      </SafeAreaView>
       )
   }
 }

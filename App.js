@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, FlatList, StatusBar, Platform } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from './utils/api'
 import * as color from './utils/color'
@@ -52,9 +52,10 @@ export default class App extends React.Component {
     const { refreshList, newDeck } = this
     return (
       <View style={{flex: 1}}>
-        <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }}>
-          <StatusBar translucent backgroundColor={color.primary}  barStyle="light-content" />
-        </View>
+        <StatusBar translucent backgroundColor={color.primary}  barStyle="light-content" />
+        {!!(Platform.OS !== 'ios') && (
+          <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }} />
+        )}
         <View style={{flex: 1}}>
           <RootNavigator screenProps={{refreshList, newDeck, decks, loadingDecks, fetchedDecks}} />
         </View>

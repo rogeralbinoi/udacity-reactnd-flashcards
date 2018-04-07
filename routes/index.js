@@ -57,12 +57,14 @@ const RootNavigator = StackNavigator({
   }
 },
 {
+  headerMode: 'screen',
   navigationOptions: {
     headerStyle: {
       backgroundColor: color.primary,
     },
     headerTintColor: '#ffffffdd'
-  }
+  },
+  cardStyle: { shadowColor: 'transparent' },
 })
 
 export default RootNavigator

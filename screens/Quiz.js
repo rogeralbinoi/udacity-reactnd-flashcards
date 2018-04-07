@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, TouchableNativeFeedback } from 'react-native';
+import React from 'react'
+import { View, TouchableNativeFeedback, SafeAreaView } from 'react-native'
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
@@ -63,33 +63,35 @@ export default class Quiz extends React.Component {
     const { item = {} } = this.state
     const questionsCount = (item.questions || []).length || 0
     return item && (
-      <View style={{flex: 1}}>
-        <DeckWrapper>
-          <Title>{item.title}</Title>
-          <QuestionsCount>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</QuestionsCount>
-        </DeckWrapper>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+        <View style={{flex: 1, backgroundColor: '#efefef'}}>
+          <DeckWrapper>
+            <Title>{item.title}</Title>
+            <QuestionsCount>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</QuestionsCount>
+          </DeckWrapper>
 
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Button
-            raised
-            large
-            icon={{name: 'plus', type: 'font-awesome', size: 15}}
-            backgroundColor={color.success}
-            containerViewStyle={{marginBottom: 10, flex: 1}}
-            onPress={() => {navigation.navigate('NewCard', {item, refreshDeck: this.refreshDeck})}}
-            title='Card' />
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Button
+              raised
+              large
+              icon={{name: 'plus', type: 'font-awesome', size: 15}}
+              backgroundColor={color.success}
+              containerViewStyle={{marginBottom: 10, flex: 1}}
+              onPress={() => {navigation.navigate('NewCard', {item, refreshDeck: this.refreshDeck})}}
+              title='Card' />
 
-          <Button
-            raised
-            large
-            icon={{name: 'play', type: 'font-awesome', size: 15}}
-            disabled={!questionsCount}
-            containerViewStyle={{marginBottom: 10, flex: 1}}
-            backgroundColor={color.primary}
-            onPress={() => {navigation.navigate('Card', {item})}}
-            title='Iniciar Quiz' />
+            <Button
+              raised
+              large
+              icon={{name: 'play', type: 'font-awesome', size: 15}}
+              disabled={!questionsCount}
+              containerViewStyle={{marginBottom: 10, flex: 1}}
+              backgroundColor={color.primary}
+              onPress={() => {navigation.navigate('Card', {item})}}
+              title='Iniciar Quiz' />
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
   render() {

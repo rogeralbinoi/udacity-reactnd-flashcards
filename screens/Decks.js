@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Vibration, Alert } from 'react-native';
+import { FlatList, Vibration, Alert, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
@@ -49,16 +49,19 @@ export default class Decks extends React.Component {
   renderDecks = () => {
     const {navigation, screenProps = {}} = this.props
     return (screenProps.decks || []).length ? (
-      <FlatList
-        data={screenProps.decks}
-        renderItem={({item}) => (
-          <Deck 
-            questions={item.questions}
-            item={item}
-            onLongPress={() => this.handleLongPress({item})}
-            onPress={() => navigation.navigate('Deck', {item})}>{item.title}</Deck>
-        )}
-      />
+      <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
+        <FlatList
+          style={{backgroundColor: '#efefef'}}
+          data={screenProps.decks}
+          renderItem={({item}) => (
+            <Deck 
+              questions={item.questions}
+              item={item}
+              onLongPress={() => this.handleLongPress({item})}
+              onPress={() => navigation.navigate('Deck', {item})}>{item.title}</Deck>
+          )}
+        />
+      </SafeAreaView>
     ) : (
       <FirstDeckMessageWrapper>
         <FirstDeckMessage>Vamos lá!!</FirstDeckMessage>

@@ -19,9 +19,7 @@ const Title = styled.Text`
   font-size: 26;
   text-align: center;
   padding-top: 20;
-  padding-right: 20;
   padding-bottom: 20;
-  padding-left: 20;
 `
 
 const TextField = {
@@ -52,8 +50,8 @@ export default class NewDeck extends React.Component {
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={true}
         behavior="padding"
-        style={{flex: 1, justifyContent: 'center', alignItems: 'center', paddingLeft: 20, paddingRight: 20}}>
-          <View>
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{width: '100%', paddingLeft: 10, paddingRight: 10}}>
             <Title>Qual é o título do seu novo Deck?</Title>
             <FormInput
               inputStyle={TextField}
