@@ -26,7 +26,7 @@ const Wrapper = styled.View`
 const Deck = ({children, questions = [], item = {}, ...props}) => {
   const questionsCount = questions.length || 0
   return (
-    <TouchableNativeFeedback {...props} style={{marginBottom: 10}}>
+    <TouchableNativeFeedback {...props}>
       <Card>
         <Wrapper>
           <Title>{children}</Title>

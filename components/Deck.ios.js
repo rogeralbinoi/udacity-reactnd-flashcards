@@ -25,7 +25,7 @@ const Wrapper = styled.View`
 const Deck = ({children, questions = [], item = {}, ...props}) => {
   const questionsCount = questions.length || 0
   return (
-    <TouchableOpacity {...props} style={{marginBottom: 20}}>
+    <TouchableOpacity {...props}>
       <Card >
         <Wrapper>
           <Title>{children}</Title>

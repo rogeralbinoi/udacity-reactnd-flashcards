@@ -25,23 +25,10 @@ export default class App extends React.Component {
       fetchedDecks: false
     }
   }
-  newDeck = ({navigation, item}) => {
-    this.refreshList().then(() => {
-      const resetAction = NavigationActions.reset({
-        index: 1,
-        actions: [
-          NavigationActions.navigate({ routeName: 'Home'}),
-          NavigationActions.navigate({ routeName: 'Deck', params: {item}}),
-        ]
-      })
-      navigation.dispatch(resetAction)
-    })
-  }
   componentDidMount() {
     setLocalNotification()
   }
   render() {
-    const { newDeck } = this
     return (
       <Provider store={store}>
         <View style={{flex: 1}}>
@@ -50,7 +37,7 @@ export default class App extends React.Component {
             <View style={{ backgroundColor: color.primary, height: Constants.statusBarHeight }} />
           )}
           <View style={{flex: 1}}>
-            <RootNavigator screenProps={{newDeck}} />
+            <RootNavigator />
           </View>
         </View>
       </Provider>
