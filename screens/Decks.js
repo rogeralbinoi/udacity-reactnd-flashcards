@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { FlatList, Vibration, Alert, SafeAreaView } from 'react-native';
+import { deckActions } from '../actions'
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
@@ -27,7 +29,7 @@ const FirstDeckMessageWrapper = styled.View`
   align-items: center;
 `
 
-export default class Decks extends React.Component {
+class Decks extends React.Component {
   handleLongPress = ({item}) => {
     Vibration.vibrate(100)
     Alert.alert(
@@ -41,18 +43,20 @@ export default class Decks extends React.Component {
     )
   }
   removeDeck = ({key}) => {
-    const { screenProps } = this.props
     API.removeDeck({key}).then((decks) => {
-      screenProps.refreshList()
+      this.props.fetchDecks()
     })
   }
+  componentDidMount() {
+    this.props.fetchDecks()
+  }
   renderDecks = () => {
-    const {navigation, screenProps = {}} = this.props
-    return (screenProps.decks || []).length ? (
+    const {navigation, decks, fechedDecks} = this.props
+    return decks.length ? (
       <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
         <FlatList
           style={{backgroundColor: '#efefef'}}
-          data={screenProps.decks}
+          data={decks}
           renderItem={({item}) => (
             <Deck 
               questions={item.questions}
@@ -75,7 +79,26 @@ export default class Decks extends React.Component {
     )
   }
   render() {
-    const {navigation, screenProps} = this.props
-    return !screenProps.fetchedDecks && this.renderLoading() || this.renderDecks()
+    const {navigation, fetchedDecks} = this.props
+    return !fetchedDecks && this.renderLoading() || this.renderDecks()
   }
 }
+
+
+const mapStateToProps = state => {
+  return {
+    decks: state.decks.decks,
+    loadingDecks: state.decks.loading,
+    fetchedDecks: state.decks.fetched
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchDecks: () => {
+      dispatch(deckActions.fetchDecks())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Decks)

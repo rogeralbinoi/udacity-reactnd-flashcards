@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, TouchableNativeFeedback, SafeAreaView } from 'react-native'
+import { connect } from 'react-redux'
 import styled from 'styled-components/native'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
@@ -34,7 +35,7 @@ const DeckWrapper = styled.View`
   align-items: center;
 `
 
-export default class Quiz extends React.Component {
+class Quiz extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -59,7 +60,7 @@ export default class Quiz extends React.Component {
     )
   }
   renderQuiz() {
-    const { navigation, screenProps } = this.props
+    const { navigation } = this.props
     const { item = {} } = this.state
     const questionsCount = (item.questions || []).length || 0
     return item && (
@@ -95,9 +96,19 @@ export default class Quiz extends React.Component {
     )
   }
   render() {
-    const { navigation, screenProps } = this.props
+    const { navigation, fetchedDecks, loadingDecks } = this.props
     const { item = {} } = this.state
     const questionsCount = (item.questions || []).length || 0
-    return !screenProps.fetchedDecks && this.renderLoading() || this.renderQuiz()
+    return !fetchedDecks && this.renderLoading() || this.renderQuiz()
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    decks: state.decks.decks,
+    loadingDecks: state.decks.loading,
+    fetchedDecks: state.decks.fetched
+  }
+}
+
+export default connect(mapStateToProps)(Quiz)
