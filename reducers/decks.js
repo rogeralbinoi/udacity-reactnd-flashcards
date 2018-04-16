@@ -1,5 +1,5 @@
 import { deckActions } from '../actions'
-const { FETCH_DECKS } = deckActions
+const { FETCH_DECKS, LOAD_DECKS } = deckActions
 const initialState = {
     decks: [],
     fetched: false,
@@ -14,6 +14,12 @@ const decks = (state = initialState, action = '') => {
           fetched: true,
           loading: false,
           decks: action.decks
+      }
+    case LOAD_DECKS:
+      return {
+        ...state,
+        fetched: false,
+        loading: true
       }
     default:
       return state

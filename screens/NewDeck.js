@@ -64,6 +64,7 @@ class NewDeck extends React.Component {
           <View style={{width: '100%', paddingLeft: 10, paddingRight: 10}}>
             <Title>Qual é o título do seu novo Deck?</Title>
             <FormInput
+              autoFocus
               inputStyle={TextField}
               placeholder="Ex: Alimentos em inglês"
               value={this.state.title}

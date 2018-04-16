@@ -50,6 +50,7 @@ export default class NewCard extends React.Component {
             <View style={{width: '100%', paddingLeft: 10, paddingRight: 10}}>
               <FormLabel>Pergunta</FormLabel>
               <FormInput
+                autoFocus
                 placeholder="Ex: Como diz Arroz em inglês?"
                 inputStyle={{fontSize: 18}}
                 value={this.state.question}

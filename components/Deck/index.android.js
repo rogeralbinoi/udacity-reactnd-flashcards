@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, Alert, TouchableNativeFeedback } from 'react-native'
 import styled from 'styled-components/native'
-import * as API from '../utils/api'
+import * as API from '../../utils/api'
 import { Card, Button } from 'react-native-elements'
-import * as color from '../utils/color'
+import * as color from '../../utils/color'
 
 const Title = styled.Text`
   color: ${color.primaryBlack};
@@ -19,15 +19,15 @@ const Count = styled.Text`
 
 const Wrapper = styled.View`
   border-top-width: 0;
-  padding-top: 25;
-  padding-bottom:  25;
+  padding-top: 20;
+  padding-bottom:  20;
 `
 
-const Deck = ({children, questions = [], item = {}, ...props}) => {
+const Deck = ({children, questions = [], item = {}, last = false, ...props}) => {
   const questionsCount = questions.length || 0
   return (
     <TouchableNativeFeedback {...props}>
-      <Card>
+      <Card containerStyle={{marginBottom: last ? 20 : 0}}>
         <Wrapper>
           <Title>{children}</Title>
           <Count>{(!!questionsCount && `${questionsCount} ${questionsCount === 1 ? 'card' : 'cards'}`) || 'Crie seu primeiro card!! 🙂' }</Count>

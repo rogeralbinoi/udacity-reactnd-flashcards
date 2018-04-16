@@ -52,18 +52,24 @@ class Decks extends React.Component {
   }
   renderDecks = () => {
     const {navigation, decks, fechedDecks} = this.props
+    const decksLength = decks.length
     return decks.length ? (
       <SafeAreaView style={{flex: 1, backgroundColor: '#efefef'}}>
         <FlatList
           style={{backgroundColor: '#efefef'}}
           data={decks}
-          renderItem={({item}) => (
-            <Deck 
-              questions={item.questions}
-              item={item}
-              onLongPress={() => this.handleLongPress({item})}
-              onPress={() => navigation.navigate('Deck', {item})}>{item.title}</Deck>
-          )}
+          renderItem={({item, index}) => {
+              const last = !!(index + 1 === decksLength)
+              return (
+                <Deck 
+                  last={last}
+                  questions={item.questions}
+                  item={item}
+                  onLongPress={() => this.handleLongPress({item, navigation})}
+                  onPress={() => navigation.navigate('Deck', {item})}>{item.title}</Deck>
+              )
+            }
+          }
         />
       </SafeAreaView>
     ) : (
