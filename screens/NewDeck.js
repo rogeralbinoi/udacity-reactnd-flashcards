@@ -4,7 +4,10 @@ import {
   KeyboardAvoidingView,
   TouchableNativeFeedback,
 } from 'react-native';
+import { connect } from 'react-redux'
 import styled from 'styled-components/native'
+import { NavigationActions } from 'react-navigation'
+import { deckActions } from '../actions'
 import * as API from '../utils/api'
 import * as color from '../utils/color'
 import { Button, FormLabel, FormInput } from 'react-native-elements'
@@ -32,16 +35,23 @@ const TextField = {
   color: '#000'
 }
 
-export default class NewDeck extends React.Component {
+class NewDeck extends React.Component {
   state = {
     title: ''
   }
   saveDeck = () => {
-    const {navigation, screenProps} = this.props
+    const {navigation} = this.props
     API.createDeck({title: this.state.title}).then((item) => {
       this.setState({title: ''})
-      screenProps.newDeck({navigation, item})
-      this.props.navigation.goBack()
+      this.props.fetchDecks()
+      const resetAction = NavigationActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Home'}),
+          NavigationActions.navigate({ routeName: 'Deck', params: {item}}),
+        ]
+      })
+      navigation.dispatch(resetAction)
     })
   }
   render() {
@@ -54,6 +64,7 @@ export default class NewDeck extends React.Component {
           <View style={{width: '100%', paddingLeft: 10, paddingRight: 10}}>
             <Title>Qual é o título do seu novo Deck?</Title>
             <FormInput
+              autoFocus
               inputStyle={TextField}
               placeholder="Ex: Alimentos em inglês"
               value={this.state.title}
@@ -70,3 +81,21 @@ export default class NewDeck extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    decks: state.decks.decks,
+    loadingDecks: state.decks.loading,
+    fetchedDecks: state.decks.fetched
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchDecks: () => {
+      dispatch(deckActions.fetchDecks())
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)

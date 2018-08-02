@@ -6,7 +6,7 @@ import NewCard from '../screens/NewCard'
 import Finish from '../screens/Finish'
 import Decks from '../screens/Decks'
 import * as color from '../utils/color'
-import { Button } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
 import NewDeck from '../screens/NewDeck'
 
 const RootNavigator = StackNavigator({
@@ -16,10 +16,20 @@ const RootNavigator = StackNavigator({
       {
         title: 'FlashCards',
         headerRight: (
-          <Button
-            backgroundColor={color.primaryBlack}
+          <Icon
+            name="plus"
+            type="font-awesome"
+            size={15}
+            containerStyle={{
+              marginRight: 5,
+              paddingTop: 15,
+              paddingBottom: 15,
+              paddingRight: 15,
+              paddingLeft: 15,
+            }}
+            underlayColor={color.primaryBlack}
+            color="#fff"
             onPress={() => {navigation.navigate('NewDeck')}}
-            title="Novo Deck"
           />
         )
       }

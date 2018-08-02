@@ -24,15 +24,13 @@ export default class NewCard extends React.Component {
     loadingDeck: false
   }
   saveDeck = () => {
-    const {navigation, screenProps} = this.props
+    const {navigation} = this.props
     const { key } = navigation.state.params.item
     const { refreshDeck } = navigation.state.params
     const {question, answer} = this.state
     this.setState({loadingDeck: true})
     API.createCard({key, question: { question, answer}}).then(() => {
-      screenProps.refreshList().then(() => {
-        refreshDeck().then(navigation.goBack)
-      })
+      refreshDeck().then(navigation.goBack)
     })
   }
   renderLoading = () => {
@@ -52,6 +50,7 @@ export default class NewCard extends React.Component {
             <View style={{width: '100%', paddingLeft: 10, paddingRight: 10}}>
               <FormLabel>Pergunta</FormLabel>
               <FormInput
+                autoFocus
                 placeholder="Ex: Como diz Arroz em inglês?"
                 inputStyle={{fontSize: 18}}
                 value={this.state.question}
